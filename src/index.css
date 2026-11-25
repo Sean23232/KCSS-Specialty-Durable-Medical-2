@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   KCSS design tokens
+------------------------------------------------------------------- */
+@theme {
+  --color-navy: #08083e;
+  --color-navy-950: #05052b;
+  --color-navy-800: #15155c;
+  --color-navy-700: #26266f;
+  --color-gold: #ffb900;
+  --color-gold-600: #e0a200;
+  --color-gold-100: #fff3cf;
+  --color-soft: #f7f8fa;
+  --color-sand: #f3efe8;
+  --color-muted: #667085;
+  --color-line: #e4e7ec;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 96px;
+  }
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-navy);
+    background: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-navy);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+  button,
+  [role="button"],
+  select,
+  label[for] {
+    cursor: pointer;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Motion
+------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes kc-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes kc-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes kc-slide-in {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+.animate-fade {
+  animation: kc-fade 0.3s ease-out both;
+}
+.animate-rise {
+  animation: kc-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.animate-slide-in {
+  animation: kc-slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.page-enter {
+  animation: kc-rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-fade,
+  .animate-rise,
+  .animate-slide-in,
+  .page-enter {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Small brand helpers
+------------------------------------------------------------------- */
+/* Gold marker underline used on key headline phrases */
+.mark-gold {
+  background-image: linear-gradient(var(--color-gold), var(--color-gold));
+  background-repeat: no-repeat;
+  background-size: 100% 0.13em;
+  background-position: 0 94%;
+  padding-bottom: 0.04em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Animated hairline underline for text links */
+.link-line {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  transition: background-size 0.35s ease;
+}
+.link-line:hover,
+.group:hover .link-line {
+  background-size: 100% 1px;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
